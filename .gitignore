@@ -1,0 +1,22 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+**/xcuserdata/
+*.xcscmblueprint
+*.xccheckout
+
+# Swift Package Manager
+.build/
+.swiftpm/
+LocalPackages/*/.build/
+# The LiteRT-LM xcframework is downloaded on build (see LocalPackages/LiteRTLM/Package.swift)
+LocalPackages/*/Frameworks/
+
+# The on-device model is downloaded at runtime, never committed
+*.litertlm
+*.task
+*.bin
+
+# macOS
+.DS_Store
