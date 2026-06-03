@@ -19,13 +19,15 @@ enough to run a real multimodal model locally, so AccessEye does exactly that.
 ## Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/onboarding.png" alt="First-launch model download" width="260">
+  <img src="docs/screenshots/onboarding.png" alt="First-launch welcome" width="250">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/downloading.png" alt="Model downloading with progress, speed and ETA" width="250">
 </p>
 
-<p align="center"><em>First launch: the model downloads once, then the app works offline.</em></p>
+<p align="center"><em>First launch: the model downloads once — with progress, speed and ETA — then the app works fully offline.</em></p>
 
-> More screenshots (live camera with a spoken description, settings, history) are
-> best seen on a real device — taken on an iPhone running the app.
+> The live camera screen with a spoken description, plus settings and history, are
+> best seen on a real device.
 
 ## What it does
 
