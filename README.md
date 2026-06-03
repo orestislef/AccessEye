@@ -19,15 +19,20 @@ enough to run a real multimodal model locally, so AccessEye does exactly that.
 ## Screenshots
 
 <p align="center">
+  <img src="docs/screenshots/camera.png" alt="Live camera with a spoken description of the scene" width="250">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/history.png" alt="History of past descriptions with photo thumbnails, in multiple languages" width="250">
+</p>
+
+<p align="center">
   <img src="docs/screenshots/onboarding.png" alt="First-launch welcome" width="250">
   &nbsp;&nbsp;
   <img src="docs/screenshots/downloading.png" alt="Model downloading with progress, speed and ETA" width="250">
 </p>
 
-<p align="center"><em>First launch: the model downloads once — with progress, speed and ETA — then the app works fully offline.</em></p>
-
-> The live camera screen with a spoken description, plus settings and history, are
-> best seen on a real device.
+<p align="center"><em>Point and tap, and the scene is described and read aloud. Every
+description is saved with its photo. The model downloads once, then everything
+runs offline.</em></p>
 
 ## What it does
 
