@@ -67,7 +67,10 @@ enum LocalizedUI {
                 clearHistory: "Εκκαθάριση ιστορικού",
                 cameraNeeded: "Απαιτείται πρόσβαση στην κάμερα. Ενεργοποιήστε την στις Ρυθμίσεις.",
                 notReady: "Δεν ήταν δυνατή η προετοιμασία της τεχνητής νοημοσύνης.",
-                done: "Τέλος")
+                done: "Τέλος",
+                stop: "Διακοπή",
+                clear: "Καθαρισμός",
+                tapToHear: "Αγγίξτε για ακρόαση ξανά")
         case .spanish:
             return UIText(
                 gettingReady: "Preparando todo…",
@@ -83,7 +86,10 @@ enum LocalizedUI {
                 clearHistory: "Borrar historial",
                 cameraNeeded: "Se necesita acceso a la cámara. Actívalo en Ajustes.",
                 notReady: "No se pudo preparar la IA.",
-                done: "Hecho")
+                done: "Hecho",
+                stop: "Detener",
+                clear: "Borrar",
+                tapToHear: "Toca para escuchar de nuevo")
         case .french:
             return UIText(
                 gettingReady: "Préparation en cours…",
@@ -99,7 +105,10 @@ enum LocalizedUI {
                 clearHistory: "Effacer l'historique",
                 cameraNeeded: "L'accès à la caméra est nécessaire. Activez-le dans Réglages.",
                 notReady: "Impossible de préparer l'IA.",
-                done: "Terminé")
+                done: "Terminé",
+                stop: "Arrêter",
+                clear: "Effacer",
+                tapToHear: "Touchez pour réécouter")
         case .german:
             return UIText(
                 gettingReady: "Wird vorbereitet…",
@@ -115,7 +124,10 @@ enum LocalizedUI {
                 clearHistory: "Verlauf löschen",
                 cameraNeeded: "Kamerazugriff ist erforderlich. Bitte in den Einstellungen aktivieren.",
                 notReady: "Die KI konnte nicht vorbereitet werden.",
-                done: "Fertig")
+                done: "Fertig",
+                stop: "Stopp",
+                clear: "Löschen",
+                tapToHear: "Zum erneuten Anhören tippen")
         case .arabic:
             return UIText(
                 gettingReady: "جارٍ التحضير…",
@@ -131,7 +143,10 @@ enum LocalizedUI {
                 clearHistory: "مسح السجل",
                 cameraNeeded: "يلزم الوصول إلى الكاميرا. يرجى تفعيله من الإعدادات.",
                 notReady: "تعذّر تجهيز الذكاء الاصطناعي.",
-                done: "تم")
+                done: "تم",
+                stop: "إيقاف",
+                clear: "مسح",
+                tapToHear: "المس للاستماع مرة أخرى")
         case .hindi:
             return UIText(
                 gettingReady: "तैयारी हो रही है…",
@@ -147,7 +162,10 @@ enum LocalizedUI {
                 clearHistory: "इतिहास साफ़ करें",
                 cameraNeeded: "कैमरा एक्सेस आवश्यक है। कृपया इसे सेटिंग्ज़ में चालू करें।",
                 notReady: "एआई तैयार नहीं हो सका।",
-                done: "हो गया")
+                done: "हो गया",
+                stop: "रोकें",
+                clear: "हटाएँ",
+                tapToHear: "फिर से सुनने के लिए टैप करें")
         case .italian:
             return UIText(
                 gettingReady: "Preparazione in corso…",
@@ -163,7 +181,10 @@ enum LocalizedUI {
                 clearHistory: "Cancella cronologia",
                 cameraNeeded: "È necessario l'accesso alla fotocamera. Attivalo in Impostazioni.",
                 notReady: "Impossibile preparare l'IA.",
-                done: "Fatto")
+                done: "Fatto",
+                stop: "Ferma",
+                clear: "Cancella",
+                tapToHear: "Tocca per riascoltare")
         case .russian:
             return UIText(
                 gettingReady: "Подготовка…",

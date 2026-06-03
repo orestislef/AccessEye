@@ -1,5 +1,11 @@
 # AccessEye
 
+![Platform](https://img.shields.io/badge/platform-iOS%2026%2B-blue)
+![Swift](https://img.shields.io/badge/Swift-5-orange)
+![UI](https://img.shields.io/badge/UI-SwiftUI-green)
+![Model](https://img.shields.io/badge/AI-Gemma%203n%20(on--device)-purple)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
+
 An offline AI narrator for blind and low-vision users. Point your iPhone at the
 world, tap the screen, and it describes what's in front of you out loud, in your
 language. Everything runs on the device. No internet, no account, no cloud, no
@@ -9,6 +15,17 @@ I built AccessEye because most "describe the world" tools depend on a server, an
 account, and a data connection. That doesn't help if you're offline, travelling,
 or simply don't want your camera feed leaving your phone. Modern iPhones are fast
 enough to run a real multimodal model locally, so AccessEye does exactly that.
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/onboarding.png" alt="First-launch model download" width="260">
+</p>
+
+<p align="center"><em>First launch: the model downloads once, then the app works offline.</em></p>
+
+> More screenshots (live camera with a spoken description, settings, history) are
+> best seen on a real device — taken on an iPhone running the app.
 
 ## What it does
 
