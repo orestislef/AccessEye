@@ -78,17 +78,25 @@ delete and re-download the model anytime from Settings.
 
 ### Project layout
 
+The repo is organized per platform. iOS is the shipping app; Android is planned
+(same idea: camera -> on-device Gemma via MediaPipe LLM Inference -> TTS).
+
 ```
-AccessEye/
-  AccessEyeApp.swift     entry point -> RootView
-  AppViewModel.swift     state machine: prepare -> ready -> describe -> speak
-  AI/                    model config, LiteRT-LM service, download manager
-  Camera/                AVFoundation capture + SwiftUI preview
-  Speech/                text-to-speech wrapper
-  History/               saved descriptions + photos
-  Models/                supported languages
-  Support/               haptics, localized strings
-  Views/                 onboarding, camera screen, settings, history
+ios/                       the iOS app (SwiftUI)
+  AccessEye.xcodeproj
+  AccessEye/
+    AccessEyeApp.swift     entry point -> RootView
+    AppViewModel.swift     state machine: prepare -> ready -> describe -> speak
+    AI/                    model config, LiteRT-LM service, download manager
+    Camera/                AVFoundation capture + SwiftUI preview
+    Speech/                text-to-speech wrapper
+    History/               saved descriptions + photos
+    Models/                supported languages
+    Support/               haptics, localized strings
+    Views/                 onboarding, camera screen, settings, history
+  LocalPackages/LiteRTLM/  Swift wrapper around Google's LiteRT-LM runtime
+android/                   the Android app (Kotlin, planned — see android/README.md)
+docs/                      screenshots and shared documentation
 ```
 
 ## Building it yourself
@@ -97,7 +105,7 @@ Requirements: Xcode 26+, and an iPhone with 8 GB RAM (iPhone 15 Pro / 16 / 17 an
 newer). It must run on a real device. The model needs the Metal GPU, which the
 Simulator cannot provide.
 
-1. Clone the repo and open `AccessEye.xcodeproj`.
+1. Clone the repo and open `ios/AccessEye.xcodeproj`.
 2. Set your signing team. The app uses the Increased Memory Limit entitlement so
    iOS allows it to hold the roughly 3.4 GB model.
 3. Build and run on your iPhone.
