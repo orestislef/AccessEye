@@ -150,7 +150,7 @@ struct ContentView: View {
                 .frame(maxHeight: 220) // scroll long descriptions instead of truncating
             }
             .padding()
-            .padding(.trailing, 24)
+            .padding(.trailing, 72) // keep the first lines clear of the flag + ✕
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(.black.opacity(0.6), in: RoundedRectangle(cornerRadius: 16))
             .contentShape(Rectangle())
@@ -161,17 +161,45 @@ struct ContentView: View {
             .accessibilityAddTraits(.isButton)
             .accessibilityAction { vm.toggleSpeech() }
 
-            Button {
-                vm.clearCurrent()
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .font(.title3)
-                    .foregroundStyle(.white.opacity(0.85))
-                    .padding(8)
+            HStack(spacing: 0) {
+                Button {
+                    reportDescription(text)
+                } label: {
+                    Image(systemName: "flag")
+                        .font(.title3)
+                        .foregroundStyle(.white.opacity(0.85))
+                        .frame(width: 44, height: 44) // comfortable tap target
+                }
+                .accessibilityLabel(vm.t.reportDescription)
+                .accessibilityHint(vm.t.reportHint)
+
+                Button {
+                    vm.clearCurrent()
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .font(.title3)
+                        .foregroundStyle(.white.opacity(0.85))
+                        .frame(width: 44, height: 44)
+                }
+                .accessibilityLabel(vm.t.clear)
             }
-            .accessibilityLabel(vm.t.clear)
         }
         .padding(.bottom, 8)
+    }
+
+    /// Opens the user's mail app with the description prefilled so a wrong or
+    /// misleading description can be reported. If no mail app can handle
+    /// mailto:, `open` fails silently and nothing happens.
+    private func reportDescription(_ text: String) {
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = "iqtaxico@gmail.com"
+        components.queryItems = [
+            URLQueryItem(name: "subject", value: "AccessEye description report"),
+            URLQueryItem(name: "body", value: "\(text)\n\nLanguage: \(vm.language.rawValue)")
+        ]
+        guard let url = components.url else { return }
+        UIApplication.shared.open(url)
     }
 
     private var describeButton: some View {

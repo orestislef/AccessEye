@@ -14,6 +14,7 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showDeleteConfirm = false
+    @State private var showGemmaTerms = false
 
     var body: some View {
         NavigationStack {
@@ -21,12 +22,16 @@ struct SettingsView: View {
                 languageSection
                 speechSection
                 modelSection
+                licensesSection
             }
             .navigationTitle(vm.t.settings)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(vm.t.done) { dismiss() }
                 }
+            }
+            .sheet(isPresented: $showGemmaTerms) {
+                GemmaTermsView(t: vm.t)
             }
         }
     }
@@ -106,6 +111,22 @@ struct SettingsView: View {
             Button("Cancel", role: .cancel) {}
         } message: {
             Text("This removes the \(ModelStore.installedSizeText) model from your device. You can download it again any time.")
+        }
+    }
+
+    /// Gemma license: the full terms plus the notice the license requires every
+    /// distribution to carry.
+    private var licensesSection: some View {
+        Section(vm.t.licenses) {
+            Button {
+                showGemmaTerms = true
+            } label: {
+                Label(vm.t.viewGemmaTerms, systemImage: "doc.text")
+            }
+
+            Text("Gemma is provided under and subject to the Gemma Terms of Use found at ai.google.dev/gemma/terms")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
         }
     }
 }

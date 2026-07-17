@@ -13,6 +13,16 @@ import SwiftUI
 struct OnboardingView: View {
     @ObservedObject var modelManager: ModelManager
 
+    @State private var showGemmaTerms = false
+
+    /// Localized labels. Onboarding runs before the main view model exists, so
+    /// read the persisted language choice directly (same key AppViewModel uses).
+    private var t: UIText {
+        let saved = UserDefaults.standard.string(forKey: "selectedLanguage")
+            .flatMap(Language.init(rawValue:)) ?? .english
+        return LocalizedUI.text(for: saved)
+    }
+
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
@@ -35,6 +45,20 @@ struct OnboardingView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 8)
 
+                // Gemma license notice + a way to read the full terms before
+                // agreeing (the download button is the acceptance).
+                Text(t.modelTermsNotice)
+                    .font(.footnote)
+                    .foregroundStyle(.white.opacity(0.7))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 8)
+
+                Button(t.viewGemmaTerms) {
+                    showGemmaTerms = true
+                }
+                .font(.callout.weight(.semibold))
+                .tint(.white)
+
                 Spacer()
 
                 content
@@ -42,6 +66,9 @@ struct OnboardingView: View {
                 Spacer()
             }
             .padding(28)
+        }
+        .sheet(isPresented: $showGemmaTerms) {
+            GemmaTermsView(t: t)
         }
     }
 
@@ -136,9 +163,11 @@ struct OnboardingView: View {
 
     private var downloadButton: some View {
         Button {
+            // Tapping is acceptance of the Gemma Terms of Use (shown above).
+            UserDefaults.standard.set(true, forKey: "gemmaTermsAccepted")
             modelManager.download()
         } label: {
-            Text("Download the AI model")
+            Text(t.agreeAndDownload)
                 .font(.title2.bold())
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 18)
