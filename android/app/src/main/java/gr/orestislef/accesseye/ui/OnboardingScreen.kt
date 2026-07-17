@@ -14,6 +14,12 @@
 //  can show its progress notification. The download proceeds either way —
 //  denial only suppresses the notification.
 //
+//  Gemma Terms compliance: whenever the download can be started, the screen
+//  shows a notice that the model is provided under the Gemma Terms of Use, plus
+//  a button that opens the full terms (GemmaTermsDialog). The call-to-action
+//  reads "Agree and download": tapping it is the user's acceptance, recorded
+//  once in the shared preferences ("gemmaTermsAccepted").
+//
 
 package gr.orestislef.accesseye.ui
 
@@ -53,6 +59,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,6 +77,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import gr.orestislef.accesseye.AccessEyeApp
 import gr.orestislef.accesseye.ai.AppConfig
 import gr.orestislef.accesseye.ai.ModelManager
 import gr.orestislef.accesseye.support.UiText
@@ -80,6 +90,8 @@ fun OnboardingScreen(modelManager: ModelManager, t: UiText) {
     val progress by modelManager.progress.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
+    var showTermsDialog by rememberSaveable { mutableStateOf(false) }
+
     // Ask for notification permission right before the first download so the
     // foreground service can show progress. Download starts whatever the user
     // answers — the permission only gates the notification, never the feature.
@@ -88,6 +100,12 @@ fun OnboardingScreen(modelManager: ModelManager, t: UiText) {
     ) { modelManager.download() }
 
     val startDownload: () -> Unit = {
+        // Tapping "Agree and download" is the user's acceptance of the Gemma
+        // Terms of Use. Record it (once is enough) in the same prefs the
+        // ViewModel uses, before the first download begins.
+        (context.applicationContext as AccessEyeApp).container.preferences
+            .edit().putBoolean("gemmaTermsAccepted", true).apply()
+
         val needsAsk = Build.VERSION.SDK_INT >= 33 &&
             ContextCompat.checkSelfPermission(
                 context, Manifest.permission.POST_NOTIFICATIONS
@@ -132,6 +150,38 @@ fun OnboardingScreen(modelManager: ModelManager, t: UiText) {
             modifier = Modifier.padding(horizontal = 8.dp),
         )
 
+        // Gemma Terms notice, shown whenever the download can be started, so
+        // the user hears it before agreeing. One merged TalkBack node; the
+        // full-terms button below stays its own focusable target.
+        if (state !is ModelManager.State.Downloading &&
+            state !is ModelManager.State.Available
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
+                Text(
+                    text = t.modelTermsNotice,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.White.copy(alpha = 0.7f),
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .semantics(mergeDescendants = true) {},
+                )
+                TextButton(
+                    onClick = { showTermsDialog = true },
+                    modifier = Modifier.heightIn(min = 48.dp),
+                ) {
+                    Text(
+                        text = t.viewGemmaTerms,
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White,
+                    )
+                }
+            }
+        }
+
         Spacer(Modifier.weight(1f))
 
         when (val s = state) {
@@ -165,6 +215,10 @@ fun OnboardingScreen(modelManager: ModelManager, t: UiText) {
 
         Spacer(Modifier.weight(1f))
     }
+
+    if (showTermsDialog) {
+        GemmaTermsDialog(t = t, onDismiss = { showTermsDialog = false })
+    }
 }
 
 // MARK: - Pieces
@@ -188,7 +242,9 @@ private fun DownloadButton(t: UiText, onClick: () -> Unit) {
         contentPadding = PaddingValues(horizontal = 20.dp, vertical = 18.dp),
     ) {
         Text(
-            text = t.downloadModel,
+            // "Agree and download": pressing this is the acceptance of the
+            // Gemma Terms of Use shown right above.
+            text = t.agreeAndDownload,
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,

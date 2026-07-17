@@ -43,6 +43,15 @@ data class UiText(
     val speedLabel: String, val etaLabel: String,
     val percentLoaded: String,         // "%d percent" for a11y announcements
     val appStarting: String,
+    // Gemma Terms of Use compliance (shown before the first model download,
+    // and again under Settings > Licenses):
+    val modelTermsNotice: String,
+    val agreeAndDownload: String,
+    val viewGemmaTerms: String,
+    val licenses: String,
+    // Report-a-description (Play generative-AI policy: a way to flag bad output):
+    val reportDescription: String,
+    val reportHint: String,            // a11y: sends the description to the developer
 )
 
 object LocalizedUI {
@@ -90,7 +99,13 @@ object LocalizedUI {
             speedLabel = "Speed",
             etaLabel = "Time left",
             percentLoaded = "%d percent",
-            appStarting = "AccessEye is starting")
+            appStarting = "AccessEye is starting",
+            modelTermsNotice = "This app uses Google's Gemma 3n AI model. Gemma is provided under and subject to the Gemma Terms of Use found at ai.google.dev/gemma/terms, and your use must follow the Gemma Prohibited Use Policy.",
+            agreeAndDownload = "Agree and download",
+            viewGemmaTerms = "Read the Gemma terms",
+            licenses = "Licenses",
+            reportDescription = "Report this description",
+            reportHint = "Sends this description to the developer so mistakes can be fixed")
 
         Language.GREEK -> UiText(
             gettingReady = "Ετοιμάζομαι…",
@@ -135,7 +150,13 @@ object LocalizedUI {
             speedLabel = "Ταχύτητα",
             etaLabel = "Χρόνος που απομένει",
             percentLoaded = "%d τοις εκατό",
-            appStarting = "Το AccessEye ξεκινά")
+            appStarting = "Το AccessEye ξεκινά",
+            modelTermsNotice = "Η εφαρμογή χρησιμοποιεί το μοντέλο τεχνητής νοημοσύνης Gemma 3n της Google. Το Gemma παρέχεται υπό τους Όρους Χρήσης Gemma στη διεύθυνση ai.google.dev/gemma/terms και υπόκειται σε αυτούς, και η χρήση σας πρέπει να τηρεί την Πολιτική Απαγορευμένων Χρήσεων Gemma.",
+            agreeAndDownload = "Αποδοχή και λήψη",
+            viewGemmaTerms = "Διαβάστε τους όρους Gemma",
+            licenses = "Άδειες χρήσης",
+            reportDescription = "Αναφορά αυτής της περιγραφής",
+            reportHint = "Στέλνει αυτή την περιγραφή στον προγραμματιστή ώστε να διορθωθούν τυχόν λάθη")
 
         Language.SPANISH -> UiText(
             gettingReady = "Preparando todo…",
@@ -180,7 +201,13 @@ object LocalizedUI {
             speedLabel = "Velocidad",
             etaLabel = "Tiempo restante",
             percentLoaded = "%d por ciento",
-            appStarting = "AccessEye se está iniciando")
+            appStarting = "AccessEye se está iniciando",
+            modelTermsNotice = "Esta app usa el modelo de IA Gemma 3n de Google. Gemma se ofrece bajo los Términos de Uso de Gemma disponibles en ai.google.dev/gemma/terms y está sujeto a ellos, y tu uso debe respetar la Política de Usos Prohibidos de Gemma.",
+            agreeAndDownload = "Aceptar y descargar",
+            viewGemmaTerms = "Leer los términos de Gemma",
+            licenses = "Licencias",
+            reportDescription = "Informar de esta descripción",
+            reportHint = "Envía esta descripción al desarrollador para que se puedan corregir los errores")
 
         Language.FRENCH -> UiText(
             gettingReady = "Préparation en cours…",
@@ -225,7 +252,13 @@ object LocalizedUI {
             speedLabel = "Vitesse",
             etaLabel = "Temps restant",
             percentLoaded = "%d pour cent",
-            appStarting = "AccessEye démarre")
+            appStarting = "AccessEye démarre",
+            modelTermsNotice = "Cette application utilise le modèle d'IA Gemma 3n de Google. Gemma est fourni selon les Conditions d'utilisation de Gemma disponibles sur ai.google.dev/gemma/terms et y est soumis, et votre usage doit respecter la Politique d'utilisation interdite de Gemma.",
+            agreeAndDownload = "Accepter et télécharger",
+            viewGemmaTerms = "Lire les conditions de Gemma",
+            licenses = "Licences",
+            reportDescription = "Signaler cette description",
+            reportHint = "Envoie cette description au développeur afin que les erreurs puissent être corrigées")
 
         Language.GERMAN -> UiText(
             gettingReady = "Wird vorbereitet…",
@@ -270,7 +303,13 @@ object LocalizedUI {
             speedLabel = "Geschwindigkeit",
             etaLabel = "Verbleibende Zeit",
             percentLoaded = "%d Prozent",
-            appStarting = "AccessEye startet")
+            appStarting = "AccessEye startet",
+            modelTermsNotice = "Diese App verwendet Googles KI-Modell Gemma 3n. Gemma wird gemäß den Gemma-Nutzungsbedingungen unter ai.google.dev/gemma/terms bereitgestellt und unterliegt diesen, und Ihre Nutzung muss der Gemma-Richtlinie zu untersagten Verwendungen entsprechen.",
+            agreeAndDownload = "Zustimmen und herunterladen",
+            viewGemmaTerms = "Gemma-Nutzungsbedingungen lesen",
+            licenses = "Lizenzen",
+            reportDescription = "Diese Beschreibung melden",
+            reportHint = "Sendet diese Beschreibung an den Entwickler, damit Fehler behoben werden können")
 
         Language.ARABIC -> UiText(
             gettingReady = "جارٍ التحضير…",
@@ -315,7 +354,13 @@ object LocalizedUI {
             speedLabel = "السرعة",
             etaLabel = "الوقت المتبقي",
             percentLoaded = "%d بالمئة",
-            appStarting = "جارٍ تشغيل AccessEye")
+            appStarting = "جارٍ تشغيل AccessEye",
+            modelTermsNotice = "يستخدم هذا التطبيق نموذج الذكاء الاصطناعي Gemma 3n من Google. يُقدَّم Gemma بموجب شروط استخدام Gemma المتوفرة على ai.google.dev/gemma/terms ويخضع لها، ويجب أن يلتزم استخدامك بسياسة الاستخدامات المحظورة الخاصة بـ Gemma.",
+            agreeAndDownload = "الموافقة والتنزيل",
+            viewGemmaTerms = "قراءة شروط Gemma",
+            licenses = "التراخيص",
+            reportDescription = "الإبلاغ عن هذا الوصف",
+            reportHint = "يرسل هذا الوصف إلى المطوّر حتى يمكن تصحيح الأخطاء")
 
         Language.HINDI -> UiText(
             gettingReady = "तैयारी हो रही है…",
@@ -360,7 +405,13 @@ object LocalizedUI {
             speedLabel = "गति",
             etaLabel = "बचा हुआ समय",
             percentLoaded = "%d प्रतिशत",
-            appStarting = "AccessEye शुरू हो रहा है")
+            appStarting = "AccessEye शुरू हो रहा है",
+            modelTermsNotice = "यह ऐप Google का Gemma 3n एआई मॉडल इस्तेमाल करता है। Gemma को ai.google.dev/gemma/terms पर उपलब्ध Gemma उपयोग की शर्तों के तहत दिया जाता है और वह उनके अधीन है, और आपके उपयोग को Gemma निषिद्ध उपयोग नीति का पालन करना होगा।",
+            agreeAndDownload = "सहमत होकर डाउनलोड करें",
+            viewGemmaTerms = "Gemma की शर्तें पढ़ें",
+            licenses = "लाइसेंस",
+            reportDescription = "इस वर्णन की रिपोर्ट करें",
+            reportHint = "यह वर्णन डेवलपर को भेजता है ताकि गलतियाँ सुधारी जा सकें")
 
         Language.ITALIAN -> UiText(
             gettingReady = "Preparazione in corso…",
@@ -405,7 +456,13 @@ object LocalizedUI {
             speedLabel = "Velocità",
             etaLabel = "Tempo rimanente",
             percentLoaded = "%d per cento",
-            appStarting = "AccessEye si sta avviando")
+            appStarting = "AccessEye si sta avviando",
+            modelTermsNotice = "Questa app usa il modello di IA Gemma 3n di Google. Gemma viene fornito in base ai Termini di utilizzo di Gemma disponibili su ai.google.dev/gemma/terms ed è soggetto ad essi, e il tuo uso deve rispettare la Politica sugli usi vietati di Gemma.",
+            agreeAndDownload = "Accetta e scarica",
+            viewGemmaTerms = "Leggi i termini di Gemma",
+            licenses = "Licenze",
+            reportDescription = "Segnala questa descrizione",
+            reportHint = "Invia questa descrizione allo sviluppatore così che gli errori possano essere corretti")
 
         Language.RUSSIAN -> UiText(
             gettingReady = "Подготовка…",
@@ -450,6 +507,12 @@ object LocalizedUI {
             speedLabel = "Скорость",
             etaLabel = "Оставшееся время",
             percentLoaded = "%d процентов",
-            appStarting = "AccessEye запускается")
+            appStarting = "AccessEye запускается",
+            modelTermsNotice = "Это приложение использует модель искусственного интеллекта Gemma 3n от Google. Gemma предоставляется на Условиях использования Gemma, доступных по адресу ai.google.dev/gemma/terms, и подчиняется им, а при использовании необходимо соблюдать Политику запрещённого использования Gemma.",
+            agreeAndDownload = "Принять и скачать",
+            viewGemmaTerms = "Прочитать условия Gemma",
+            licenses = "Лицензии",
+            reportDescription = "Пожаловаться на это описание",
+            reportHint = "Отправляет это описание разработчику, чтобы можно было исправить ошибки")
     }
 }

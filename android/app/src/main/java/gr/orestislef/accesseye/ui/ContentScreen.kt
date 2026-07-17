@@ -20,6 +20,8 @@
 package gr.orestislef.accesseye.ui
 
 import android.Manifest
+import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -57,6 +59,7 @@ import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.Flag
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -205,6 +208,7 @@ fun ContentScreen(vm: AppViewModel, modelManager: ModelManager) {
                         t = t,
                         onToggle = { vm.toggleSpeech(view) },
                         onClear = { vm.clearCurrent(view) },
+                        onReport = { reportDescription(context, text, language.id) },
                     )
                 }
             }
@@ -330,7 +334,9 @@ private fun DescribingCard(t: UiText) {
 
 /**
  * The current description: tap it to replay or stop the speech; the ✕
- * dismisses it. (User request: tap text to speak/stop + a way to clear.)
+ * dismisses it (user request: tap text to speak/stop + a way to clear), and a
+ * flag next to the ✕ emails the description to the developer, satisfying the
+ * Play generative-AI requirement that users can report a wrong or harmful output.
  */
 @Composable
 private fun DescriptionCard(
@@ -339,6 +345,7 @@ private fun DescriptionCard(
     t: UiText,
     onToggle: () -> Unit,
     onClear: () -> Unit,
+    onReport: () -> Unit,
 ) {
     Box(
         modifier = Modifier
@@ -359,7 +366,7 @@ private fun DescriptionCard(
                     onClick = onToggle,
                 )
                 .padding(16.dp)
-                .padding(end = 24.dp), // room for the ✕ (iOS parity)
+                .padding(end = 64.dp), // room for the flag + ✕ pair
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalAlignment = Alignment.Top,
         ) {
@@ -389,15 +396,65 @@ private fun DescriptionCard(
             }
         }
 
-        IconButton(
-            onClick = onClear,
-            modifier = Modifier.align(Alignment.TopEnd),
-        ) {
-            Icon(
-                imageVector = Icons.Filled.Cancel,
-                contentDescription = t.clear,
-                tint = Color.White.copy(alpha = 0.85f),
-            )
+        Row(modifier = Modifier.align(Alignment.TopEnd)) {
+            IconButton(
+                onClick = onReport,
+                modifier = Modifier
+                    .size(48.dp)
+                    // Custom click label = the a11y hint ("Sends this
+                    // description to the developer…"), like the other buttons.
+                    .semantics { onClick(label = t.reportHint, action = null) },
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Flag,
+                    contentDescription = t.reportDescription,
+                    tint = Color.White.copy(alpha = 0.85f),
+                    modifier = Modifier.size(22.dp),
+                )
+            }
+            IconButton(
+                onClick = onClear,
+                modifier = Modifier.size(48.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Cancel,
+                    contentDescription = t.clear,
+                    tint = Color.White.copy(alpha = 0.85f),
+                )
+            }
+        }
+    }
+}
+
+/**
+ * Email the description to the developer (report flow). ACTION_SENDTO targets
+ * real mail apps; if none is installed, fall back to a generic share chooser;
+ * if even that fails, do nothing rather than crash, so the user keeps the app.
+ */
+private fun reportDescription(context: Context, text: String, languageId: String) {
+    val subject = "AccessEye description report"
+    val body = "$text\n\nLanguage: $languageId"
+
+    val mailto = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse(
+            "mailto:iqtaxico@gmail.com" +
+                "?subject=" + Uri.encode(subject) +
+                "&body=" + Uri.encode(body)
+        )
+    }
+    try {
+        context.startActivity(mailto)
+    } catch (_: ActivityNotFoundException) {
+        val send = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf("iqtaxico@gmail.com"))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+        try {
+            context.startActivity(Intent.createChooser(send, null))
+        } catch (_: ActivityNotFoundException) {
+            // No app can send anything: silently give up (no crash).
         }
     }
 }

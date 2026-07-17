@@ -160,11 +160,13 @@ photos are stored locally on the phone.
 
 ## License and model terms
 
-The app code is released under the MIT License (see `LICENSE`).
+The MIT License (see `LICENSE`) covers the source code of the apps only.
 
-The Gemma 3n model is provided by Google under the Gemma Terms of Use
-(https://ai.google.dev/gemma/terms). If you redistribute the model, you must
-follow those terms.
+The Gemma 3n model is not covered by the MIT License. It is provided under and
+subject to the Gemma Terms of Use (https://ai.google.dev/gemma/terms). Anyone
+who uses the apps or redistributes the model is bound by those terms, including
+the Gemma Prohibited Use Policy
+(https://ai.google.dev/gemma/prohibited_use_policy).
 
 ## Author
 

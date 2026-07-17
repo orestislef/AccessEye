@@ -106,6 +106,7 @@ fun SettingsScreen(vm: AppViewModel, modelManager: ModelManager, onDone: () -> U
                     speechRate = speechRate,
                 )
                 ModelSection(modelManager = modelManager, t = t, onDone = onDone)
+                LicensesSection(t = t)
             }
         }
     }
@@ -356,6 +357,40 @@ private fun ModelSection(modelManager: ModelManager, t: UiText, onDone: () -> Un
                 }
             },
         )
+    }
+}
+
+// MARK: - Licenses
+
+/**
+ * The Gemma Terms of Use, reachable at any time (not only during onboarding).
+ * The row opens the same GemmaTermsDialog the onboarding screen uses; the
+ * caption below it is the exact Notice sentence the terms require, kept in
+ * English on purpose (it is a legal notice, not UI copy).
+ */
+@Composable
+private fun LicensesSection(t: UiText) {
+    var showTerms by remember { mutableStateOf(false) }
+
+    SectionHeader(t.licenses)
+    TextButton(
+        onClick = { showTerms = true },
+        modifier = Modifier
+            .padding(horizontal = 8.dp)
+            .heightIn(min = 48.dp),
+    ) {
+        Text(t.viewGemmaTerms, style = MaterialTheme.typography.titleMedium)
+    }
+    Text(
+        text = "Gemma is provided under and subject to the Gemma Terms of Use " +
+            "found at ai.google.dev/gemma/terms",
+        style = MaterialTheme.typography.bodySmall,
+        color = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.padding(horizontal = 20.dp, vertical = 4.dp),
+    )
+
+    if (showTerms) {
+        GemmaTermsDialog(t = t, onDismiss = { showTerms = false })
     }
 }
 
