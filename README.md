@@ -1,19 +1,21 @@
 # AccessEye
 
-![Platform](https://img.shields.io/badge/platform-iOS%2026%2B-blue)
+![Platform](https://img.shields.io/badge/platform-iOS%2026%2B%20%7C%20Android%2012%2B-blue)
 ![Swift](https://img.shields.io/badge/Swift-5-orange)
-![UI](https://img.shields.io/badge/UI-SwiftUI-green)
+![Kotlin](https://img.shields.io/badge/Kotlin-Compose-blueviolet)
 ![Model](https://img.shields.io/badge/AI-Gemma%203n%20(on--device)-purple)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-An offline AI narrator for blind and low-vision users. Point your iPhone at the
-world, tap the screen, and it describes what's in front of you out loud, in your
-language. Everything runs on the device. No internet, no account, no cloud, no
-subscription.
+[Διαβάστε στα Ελληνικά](README.el.md)
+
+An offline AI narrator for blind and low-vision users, for iPhone and Android.
+Point your phone at the world, tap the screen, and it describes what's in front
+of you out loud, in your language. Everything runs on the device. No internet,
+no account, no cloud, no subscription.
 
 I built AccessEye because most "describe the world" tools depend on a server, an
 account, and a data connection. That doesn't help if you're offline, travelling,
-or simply don't want your camera feed leaving your phone. Modern iPhones are fast
+or simply don't want your camera feed leaving your phone. Modern phones are fast
 enough to run a real multimodal model locally, so AccessEye does exactly that.
 
 ## Screenshots
@@ -33,6 +35,15 @@ enough to run a real multimodal model locally, so AccessEye does exactly that.
 <p align="center"><em>Point and tap, and the scene is described and read aloud. Every
 description is saved with its photo. The model downloads once, then everything
 runs offline.</em></p>
+
+The same app on Android (Kotlin + Jetpack Compose, same model file, same
+languages):
+
+<p align="center">
+  <img src="docs/screenshots/android/camera.png" alt="Android: live camera with a spoken description" width="250">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/android/history.png" alt="Android: history with Greek and English descriptions" width="250">
+</p>
 
 ## What it does
 
@@ -78,8 +89,9 @@ delete and re-download the model anytime from Settings.
 
 ### Project layout
 
-The repo is organized per platform. iOS is the shipping app; Android is planned
-(same idea: camera -> on-device Gemma via MediaPipe LLM Inference -> TTS).
+The repo is organized per platform. Both apps share the same idea, the same
+model file and the same languages: camera, then on-device Gemma via LiteRT-LM,
+then text-to-speech.
 
 ```
 ios/                       the iOS app (SwiftUI)
@@ -95,9 +107,20 @@ ios/                       the iOS app (SwiftUI)
     Support/               haptics, localized strings
     Views/                 onboarding, camera screen, settings, history
   LocalPackages/LiteRTLM/  Swift wrapper around Google's LiteRT-LM runtime
-android/                   the Android app (Kotlin, planned — see android/README.md)
+android/                   the Android app (Kotlin + Jetpack Compose)
+  app/src/main/java/gr/orestislef/accesseye/
+    AppViewModel.kt        the same state machine as iOS
+    ai/                    model config, LiteRT-LM engine, download service
+    camera/                CameraX capture + Compose preview
+    speech/                text-to-speech wrapper (offline voice picking)
+    history/               saved descriptions + photos
+    model/                 supported languages
+    support/               haptics, localized strings
+    ui/                    onboarding, camera screen, settings, history
 docs/                      screenshots and shared documentation
 ```
+
+Building the Android app is covered in [android/README.md](android/README.md).
 
 ## Building it yourself
 
@@ -145,4 +168,4 @@ follow those terms.
 
 ## Author
 
-Orestis Lef — https://github.com/orestislef
+Orestis Lef, https://github.com/orestislef
