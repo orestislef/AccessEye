@@ -73,7 +73,15 @@ class ModelDownloadService : Service() {
     override fun onDestroy() {
         // Cancels performDownload() cleanly; the .part file is kept for resume.
         serviceScope.cancel()
+        cancelNotification()
         super.onDestroy()
+    }
+
+    private fun cancelNotification() {
+        try {
+            getSystemService(NotificationManager::class.java).cancel(NOTIFICATION_ID)
+        } catch (_: Exception) {
+        }
     }
 
     /** dataSync services get ~6h on API 35+; stop cleanly, resume later. */
@@ -88,6 +96,10 @@ class ModelDownloadService : Service() {
         var lastNotify = 0L
         manager.progress.collect { p ->
             if (p == null) return@collect
+            // Never post after the download ended — a late final update would
+            // resurrect the notification right after stopForeground removed it,
+            // leaving a stuck "100%" that nothing ever cancels.
+            if (manager.state.value !is ModelManager.State.Downloading) return@collect
             val now = SystemClock.elapsedRealtime()
             val isComplete = p.totalBytes > 0 && p.downloadedBytes >= p.totalBytes
             if (now - lastNotify < 1000 && !isComplete) return@collect
@@ -101,6 +113,7 @@ class ModelDownloadService : Service() {
         manager.state.collect { state ->
             if (state !is ModelManager.State.Downloading) {
                 ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
+                cancelNotification()
                 stopSelf()
             }
         }

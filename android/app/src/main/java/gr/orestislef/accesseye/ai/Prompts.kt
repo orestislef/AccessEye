@@ -36,5 +36,24 @@ object Prompts {
         - Do not describe the image as an image or mention that you are an AI.
 
         Respond ONLY in ${language.englishName}. Do not add any preamble, labels, or explanation — give just the description.
+        ${nativeReinforcement(language)}
         """.trimIndent()
+
+    /**
+     * The same "answer only in X" instruction, written IN language X. Small
+     * on-device models occasionally ignore a language request stated only in
+     * English; restating it in the target language itself makes compliance
+     * near-certain. (English needs no second line.)
+     */
+    private fun nativeReinforcement(language: Language): String = when (language) {
+        Language.ENGLISH -> ""
+        Language.GREEK -> "Απάντησε ΜΟΝΟ στα Ελληνικά."
+        Language.SPANISH -> "Responde ÚNICAMENTE en español."
+        Language.FRENCH -> "Réponds UNIQUEMENT en français."
+        Language.GERMAN -> "Antworte AUSSCHLIESSLICH auf Deutsch."
+        Language.ARABIC -> "أجب باللغة العربية فقط."
+        Language.HINDI -> "केवल हिन्दी में उत्तर दें।"
+        Language.ITALIAN -> "Rispondi SOLO in italiano."
+        Language.RUSSIAN -> "Отвечай ТОЛЬКО на русском языке."
+    }
 }

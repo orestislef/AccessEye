@@ -104,6 +104,24 @@ class CameraManager(private val context: Context) {
         _isRunning.value = false
     }
 
+    /// Temporarily release the camera WITHOUT forgetting the lifecycle owner,
+    /// so resume() can rebind. Used while the model describes a frame: on
+    /// low-end chips the preview pipeline competes with inference for CPU/GPU
+    /// and starves the UI thread; the frozen frame costs a blind user nothing.
+    fun pause() {
+        bindJob?.cancel()
+        bindJob = null
+        cameraProvider?.unbindAll()
+        _isRunning.value = false
+    }
+
+    /// Rebind after pause(). No-op when stop() cleared the owner or permission
+    /// was never granted.
+    fun resume() {
+        val owner = pendingOwner ?: return
+        if (hasPermission && !_isRunning.value) bind(owner)
+    }
+
     // MARK: - Capture
 
     /// Capture a single still frame, rotation applied, or null on any failure.

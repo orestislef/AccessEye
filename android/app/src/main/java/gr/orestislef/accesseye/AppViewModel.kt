@@ -226,6 +226,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 fail(t.notReady)
                 return@launch
             }
+            // Release the camera while the model runs: on low-end chips the
+            // preview pipeline fights inference for CPU/GPU and the whole UI
+            // stutters. The last frame stays on screen; rebind when done.
+            camera.pause()
             try {
                 val text = describer.describe(image, _language.value)
                 _lastDescription.value = text
@@ -233,6 +237,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 speakResult(text, _language.value)
             } catch (e: Exception) {
                 fail(e.message ?: t.notReady)
+            } finally {
+                camera.resume()
             }
         }
     }
