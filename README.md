@@ -13,6 +13,9 @@ Point your phone at the world, tap the screen, and it describes what's in front
 of you out loud, in your language. Everything runs on the device. No internet,
 no account, no cloud, no subscription.
 
+The Android app is on Google Play, so you can try it live:
+https://play.google.com/store/apps/details?id=gr.orestislef.accesseye
+
 I built AccessEye because most "describe the world" tools depend on a server, an
 account, and a data connection. That doesn't help if you're offline, travelling,
 or simply don't want your camera feed leaving your phone. Modern phones are fast

@@ -7,6 +7,9 @@ an offline, on-device AI scene narrator for blind and low-vision users.
 Point the phone, tap anywhere, and it describes what is in front of you out
 loud, in your language. No internet, no account, no cloud.
 
+Try it live from Google Play:
+https://play.google.com/store/apps/details?id=gr.orestislef.accesseye
+
 <p align="center">
   <img src="../docs/screenshots/android/camera.png" alt="Live camera with a spoken description of the scene" width="250">
   &nbsp;&nbsp;

@@ -8,6 +8,9 @@
 κινητό, αγγίζετε οπουδήποτε, και σας περιγράφει φωναχτά τι υπάρχει μπροστά
 σας, στη γλώσσα σας. Χωρίς internet, χωρίς λογαριασμό, χωρίς cloud.
 
+Δοκιμάστε τη ζωντανά από το Google Play:
+https://play.google.com/store/apps/details?id=gr.orestislef.accesseye
+
 <p align="center">
   <img src="../docs/screenshots/android/camera.png" alt="Ζωντανή κάμερα με προφορική περιγραφή της σκηνής" width="250">
   &nbsp;&nbsp;
