@@ -47,8 +47,9 @@ https://play.google.com/store/apps/details?id=gr.orestislef.accesseye
 
 Το URL λήψης βρίσκεται στο
 `app/src/main/java/gr/orestislef/accesseye/ai/AppConfig.kt` και δείχνει στο
-ίδιο αρχείο που χρησιμοποιεί η εφαρμογή iOS, ώστε οι δύο πλατφόρμες να
-μένουν συγχρονισμένες.
+ίδιο αρχείο που χρησιμοποιεί η εφαρμογή iOS
+(https://huggingface.co/OrestisIqtaxi/accesseye-gemma3n-e2b), ώστε οι δύο
+πλατφόρμες να μένουν συγχρονισμένες.
 
 ## Πώς να το χτίσετε
 

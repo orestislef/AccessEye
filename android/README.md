@@ -42,7 +42,9 @@ connection drops (HTTP range requests against a `.part` file). You can delete
 and re-download the model any time from Settings.
 
 The download URL lives in `app/src/main/java/gr/orestislef/accesseye/ai/AppConfig.kt`
-and points at the same file the iOS app uses, so both platforms stay in sync.
+and points at the same file the iOS app uses
+(https://huggingface.co/OrestisIqtaxi/accesseye-gemma3n-e2b), so both
+platforms stay in sync.
 
 ## Building it
 

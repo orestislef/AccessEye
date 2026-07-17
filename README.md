@@ -139,7 +139,9 @@ Simulator cannot provide.
    ready.
 
 The model download URL is in `AI/AppConfig.swift`. By default it points at a
-public copy of the model; you can host your own and change the URL there.
+public copy of the model on Hugging Face
+(https://huggingface.co/OrestisIqtaxi/accesseye-gemma3n-e2b); you can host
+your own and change the URL there.
 
 There is also a built-in demo describer (canned descriptions) for trying the whole
 flow on the Simulator without the model. Set `useRealGemma = false` in
