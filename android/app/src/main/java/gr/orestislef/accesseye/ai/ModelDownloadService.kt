@@ -74,6 +74,7 @@ class ModelDownloadService : Service() {
         // Cancels performDownload() cleanly; the .part file is kept for resume.
         serviceScope.cancel()
         cancelNotification()
+        scheduleSweepCancel()
         super.onDestroy()
     }
 
@@ -96,13 +97,16 @@ class ModelDownloadService : Service() {
         var lastNotify = 0L
         manager.progress.collect { p ->
             if (p == null) return@collect
-            // Never post after the download ended — a late final update would
-            // resurrect the notification right after stopForeground removed it,
-            // leaving a stuck "100%" that nothing ever cancels.
+            // Never post the FINAL update: completion and teardown race, and a
+            // notify() that lands after stopForeground leaves an orphaned
+            // "100%" notification that nothing can remove. The ongoing
+            // foreground notification already shows the last percent; removal
+            // is the only thing completion needs.
+            val isComplete = p.totalBytes > 0 && p.downloadedBytes >= p.totalBytes
+            if (isComplete) return@collect
             if (manager.state.value !is ModelManager.State.Downloading) return@collect
             val now = SystemClock.elapsedRealtime()
-            val isComplete = p.totalBytes > 0 && p.downloadedBytes >= p.totalBytes
-            if (now - lastNotify < 1000 && !isComplete) return@collect
+            if (now - lastNotify < 1000) return@collect
             lastNotify = now
             postNotification(buildNotification(p))
         }
@@ -114,9 +118,25 @@ class ModelDownloadService : Service() {
             if (state !is ModelManager.State.Downloading) {
                 ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE)
                 cancelNotification()
+                scheduleSweepCancel()
                 stopSelf()
             }
         }
+    }
+
+    /**
+     * Belt and suspenders for the teardown race: cancel again shortly after
+     * stopping, from the main looper, so any straggler notify() that slipped
+     * past the guards is removed too.
+     */
+    private fun scheduleSweepCancel() {
+        val nm = applicationContext.getSystemService(NotificationManager::class.java)
+        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+            try {
+                nm.cancel(NOTIFICATION_ID)
+            } catch (_: Exception) {
+            }
+        }, 1_500)
     }
 
     // MARK: - Notification
