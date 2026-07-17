@@ -1,0 +1,15 @@
+<!--
+  themes.xml
+  AccessEye
+
+  Minimal XML theme for the single Compose activity. The app is pure Compose
+  (Material 3 theme lives in ui/theme/Theme.kt), so we deliberately extend the
+  platform Material theme instead of pulling in the Material Components XML
+  library. Black window background avoids a white flash before Compose draws;
+  status/navigation bar styling is handled by enableEdgeToEdge() in code.
+-->
+<resources>
+    <style name="Theme.AccessEye" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+</resources>

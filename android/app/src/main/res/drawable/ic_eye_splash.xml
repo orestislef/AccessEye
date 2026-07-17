@@ -1,0 +1,43 @@
+<!--
+  ic_eye_splash.xml
+  AccessEye
+
+  In-app splash screen artwork: the AccessEye eye + sound waves as white paths
+  on a transparent background (drawn over the black splash screen). Same design
+  as the launcher monochrome layer, scaled to a 200dp viewport, with the white
+  highlight dot kept inside the punched-out pupil.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+
+    <!-- Almond eye with the pupil cut out (even-odd fill). -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M20,100 A78.3,78.3 0 0 1 140,100 A78.3,78.3 0 0 1 20,100 Z M65,100 a15,15 0 1 0 30,0 a15,15 0 1 0 -30,0 Z" />
+
+    <!-- Highlight dot, top-right of the pupil. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M81.5,93 a4.5,4.5 0 1 0 9,0 a4.5,4.5 0 1 0 -9,0 Z" />
+
+    <!-- Three sound-wave arcs ")))" to the right of the eye. -->
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:pathData="M153.31,88.69 A16,16 0 0 1 153.31,111.31" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:pathData="M161.09,80.91 A27,27 0 0 1 161.09,119.09" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:pathData="M168.87,73.13 A38,38 0 0 1 168.87,126.87" />
+</vector>

@@ -1,0 +1,38 @@
+<!--
+  ic_launcher_monochrome.xml
+  AccessEye
+
+  Monochrome (themed icon) layer: the same eye + sound-wave artwork as the
+  foreground, drawn as single-color white paths. The pupil is punched out of the
+  filled almond with an even-odd fill so the eye stays readable when the system
+  tints the icon. Same geometry / safe zone as ic_launcher_foreground.xml.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Almond eye with the pupil cut out (even-odd fill). -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:fillType="evenOdd"
+        android:pathData="M25,54 A29.2,29.2 0 0 1 69,54 A29.2,29.2 0 0 1 25,54 Z M42.1,54 a5.4,5.4 0 1 0 10.8,0 a5.4,5.4 0 1 0 -10.8,0 Z" />
+
+    <!-- Three sound-wave arcs ")))" to the right of the eye. -->
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M74.24,49.76 A6,6 0 0 1 74.24,58.24" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M77.07,46.93 A10,10 0 0 1 77.07,61.07" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M79.9,44.1 A14,14 0 0 1 79.9,63.9" />
+</vector>

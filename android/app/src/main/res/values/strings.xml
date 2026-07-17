@@ -1,0 +1,11 @@
+<!--
+  strings.xml
+  AccessEye
+
+  Only the app name lives here. All other user-facing strings come from
+  LocalizedUI (the user's CHOSEN output language, like iOS), not device-locale
+  string resources.
+-->
+<resources>
+    <string name="app_name">AccessEye</string>
+</resources>

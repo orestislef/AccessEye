@@ -1,0 +1,59 @@
+<!--
+  ic_launcher_foreground.xml
+  AccessEye
+
+  Adaptive launcher icon foreground layer, mirroring the iOS app icon artwork:
+  white almond eye (two symmetric arcs), blue iris with a lighter concentric ring,
+  dark navy pupil with a white highlight dot, and three white sound-wave arcs
+  emanating to the right of the eye. Everything sits inside the central 66dp
+  adaptive-icon safe zone (coordinates 21..87 of the 108dp viewport).
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- White almond / eye outline: two symmetric circular arcs (a vesica shape). -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M25,54 A29.2,29.2 0 0 1 69,54 A29.2,29.2 0 0 1 25,54 Z" />
+
+    <!-- Blue iris. -->
+    <path
+        android:fillColor="#FF2196E8"
+        android:pathData="M37.5,54 a9.5,9.5 0 1 0 19,0 a9.5,9.5 0 1 0 -19,0 Z" />
+
+    <!-- Lighter concentric ring inside the iris. -->
+    <path
+        android:strokeColor="#FF64B5F0"
+        android:strokeWidth="1.4"
+        android:pathData="M40.2,54 a6.8,6.8 0 1 0 13.6,0 a6.8,6.8 0 1 0 -13.6,0" />
+
+    <!-- Very dark navy pupil, offset slightly like the iOS icon. -->
+    <path
+        android:fillColor="#FF0A1230"
+        android:pathData="M42.1,54 a5.4,5.4 0 1 0 10.8,0 a5.4,5.4 0 1 0 -10.8,0 Z" />
+
+    <!-- White highlight dot, top-right of the pupil. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M48.2,51.5 a1.8,1.8 0 1 0 3.6,0 a1.8,1.8 0 1 0 -3.6,0 Z" />
+
+    <!-- Three white sound-wave arcs ")))" to the right of the eye, growing radius. -->
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M74.24,49.76 A6,6 0 0 1 74.24,58.24" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M77.07,46.93 A10,10 0 0 1 77.07,61.07" />
+    <path
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round"
+        android:pathData="M79.9,44.1 A14,14 0 0 1 79.9,63.9" />
+</vector>
