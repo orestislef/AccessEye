@@ -85,5 +85,13 @@ enum class Language(val id: String) {
         /** Look up a language by its persisted id, falling back to English. */
         fun fromId(id: String?): Language =
             entries.firstOrNull { it.id == id } ?: ENGLISH
+
+        /**
+         * Best match for a device locale (by ISO language code), falling back to
+         * English. Used on FIRST launch so the app starts in the phone's system
+         * language when we support it.
+         */
+        fun fromLocale(locale: Locale): Language =
+            entries.firstOrNull { it.ttsLocale.language == locale.language } ?: ENGLISH
     }
 }

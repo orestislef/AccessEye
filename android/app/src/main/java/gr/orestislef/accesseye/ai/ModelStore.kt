@@ -18,6 +18,8 @@ import android.content.Context
 import android.text.format.Formatter
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.StandardCopyOption
 
 class ModelStore(context: Context) {
 
@@ -45,14 +47,29 @@ class ModelStore(context: Context) {
     val installedSizeText: String
         get() = Formatter.formatFileSize(appContext, installedSizeBytes)
 
-    /** Move a freshly downloaded temp file into its final location atomically. */
-    fun install(temp: File) {
+    /** Make sure [directory] exists — for anyone about to write [partFile] too. */
+    fun ensureDirectory() {
         directory.mkdirs()
-        if (file.exists() && !file.delete()) {
-            throw IOException("Could not replace the existing model file.")
-        }
-        if (!temp.renameTo(file)) {
-            throw IOException("Could not move the downloaded model into place.")
+    }
+
+    /**
+     * Move a freshly downloaded temp file into its final location atomically.
+     * Never deletes an existing installed model up front — the rename replaces
+     * it in one step, so a failure can't leave the user with NO model at all.
+     */
+    fun install(temp: File) {
+        ensureDirectory()
+        try {
+            Files.move(
+                temp.toPath(), file.toPath(),
+                StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING,
+            )
+        } catch (e: Exception) {
+            // Same-directory rename(2) also replaces the target atomically on
+            // Android's filesystems — plain-rename fallback, still no delete-first.
+            if (!temp.renameTo(file)) {
+                throw IOException("Could not move the downloaded model into place.", e)
+            }
         }
     }
 

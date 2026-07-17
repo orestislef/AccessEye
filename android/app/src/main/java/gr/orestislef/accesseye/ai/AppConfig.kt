@@ -12,9 +12,11 @@ import android.content.Context
 object AppConfig {
 
     /**
-     * Flip to `true` once the MediaPipe SDK is linked (see SETUP.md). While
-     * `false`, the app uses `MockDescriber` so it runs end-to-end without the
-     * multi-GB model — and onboarding/download is skipped. (README §9 — M0.)
+     * `true` = the real LiteRT-LM engine (`GemmaService`): Gemma 3n runs fully
+     * on-device, with the multi-GB model downloaded on first launch. Flip to
+     * `false` to use `MockDescriber` (canned descriptions, no model, download
+     * skipped) — handy on emulators, which can't run the engine's GPU vision
+     * backend. (README §9 — M0.)
      */
     const val useRealGemma: Boolean = true
 
